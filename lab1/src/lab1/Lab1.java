@@ -1,8 +1,10 @@
-import lab1.io.Console;
-import list.RealList;
-import util.Num;
+package lab1;
 
-public class Main {
+import lab1.io.Console;
+import lab1.list.RealList;
+import lab1.util.Num;
+
+public class Lab1 {
 
     public static void main(String[] args) {
         System.out.println("=== Дублирование положительных чисел ===");

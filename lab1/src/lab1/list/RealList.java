@@ -1,6 +1,6 @@
-package list;
+package lab1.list;
 
-import util.Num;
+import lab1.util.Num;
 
 public class RealList {
 
