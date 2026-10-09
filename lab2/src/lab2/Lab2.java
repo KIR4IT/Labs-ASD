@@ -3,7 +3,7 @@ package src.lab2;
 import src.lab2.io.Console;
 import src.lab2.matrix.CCSMatrix;
 import src.lab2.matrix.MatrixOps;
-import lab1.util.Num;
+import src.lab2.util.Num;
 
 public class Lab2 {
 

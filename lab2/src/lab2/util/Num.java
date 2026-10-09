@@ -4,7 +4,6 @@ public final class Num {
 
     private Num() {}
 
-    // парсер
     public static boolean isDouble(String s) {
         try { parse(s); return true; }
         catch (NumberFormatException e) { return false; }
@@ -68,15 +67,14 @@ public final class Num {
         }
 
         if (i != len) throw new NumberFormatException("trailing");
-        if (result != result || result == 1.0/0.0 || result == -1.0/0.0)
+        if (isNaN(result) || isInf(result))
             throw new NumberFormatException("overflow");
 
         return neg ? -result : result;
     }
 
-
     public static String format(double v) {
-        if (v != v) return "NaN";
+        if (isNaN(v)) return "NaN";
         if (v == 1.0/0.0) return "Infinity";
         if (v == -1.0/0.0) return "-Infinity";
 
@@ -88,7 +86,6 @@ public final class Num {
 
         if (fracPart < 1e-12) return (neg ? "-" : "") + intPart;
 
-        // округляем
         int digits = 6;
         double scale = 1;
         for (int k = 0; k < digits; k++) scale *= 10;
@@ -142,6 +139,12 @@ public final class Num {
         char[] buf = new char[b - a];
         for (int k = 0; k < buf.length; k++) buf[k] = s.charAt(a + k);
         return new String(buf);
+    }
+
+    // свои проверки — чтобы IDEA не ругалась на "comparison to itself"
+    private static boolean isNaN(double v) { return v != v; }
+    private static boolean isInf(double v) {
+        return v == 1.0/0.0 || v == -1.0/0.0;
     }
 
     private static boolean isDigit(char c) { return c >= '0' && c <= '9'; }

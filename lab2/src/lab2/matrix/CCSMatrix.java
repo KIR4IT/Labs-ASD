@@ -1,6 +1,6 @@
 package src.lab2.matrix;
 
-import lab1.util.Num;
+import src.lab2.util.Num;
 
 /** Разреженная матрица в формате CCS (Compressed Column Storage). */
 public class CCSMatrix {

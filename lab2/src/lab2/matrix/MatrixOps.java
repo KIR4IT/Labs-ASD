@@ -12,16 +12,13 @@ public final class MatrixOps {
      */
     public static void cyclicShiftColumns(CCSMatrix m, int n) {
         int rows = m.rows;
-        // нормализуем n в диапазон [0, rows)
         n = ((n % rows) + rows) % rows;
         if (n == 0) return;
 
-        // 1) сдвигаем индексы строк
         for (int i = 0; i < m.rowIndex.length; i++) {
             m.rowIndex[i] = (m.rowIndex[i] + n) % rows;
         }
 
-        // 2) сортируем элементы внутри каждого столбца по rowIndex
         for (int j = 0; j < m.cols; j++) {
             int from = m.colPtr[j];
             int to = m.colPtr[j + 1];
