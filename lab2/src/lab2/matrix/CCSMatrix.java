@@ -2,7 +2,7 @@ package src.lab2.matrix;
 
 import src.lab2.util.Num;
 
-/** Разреженная матрица в формате CCS (Compressed Column Storage). */
+/** матрица CCS */
 public class CCSMatrix {
 
     public int rows;
@@ -19,7 +19,7 @@ public class CCSMatrix {
         this.colPtr = new int[cols + 1];
     }
 
-    /** Плотная матрица -> CCS. */
+    /** CCS */
     public static CCSMatrix fromDense(double[][] a, int rows, int cols) {
         int nnz = 0;
         for (int i = 0; i < rows; i++)
@@ -46,7 +46,7 @@ public class CCSMatrix {
         return m;
     }
 
-    /** CCS -> плотная матрица (для вывода). */
+    /** CCS для вывода */
     public double[][] toDense() {
         double[][] a = new double[rows][cols];
         for (int j = 0; j < cols; j++) {

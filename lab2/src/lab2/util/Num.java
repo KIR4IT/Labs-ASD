@@ -141,7 +141,7 @@ public final class Num {
         return new String(buf);
     }
 
-    // свои проверки — чтобы IDEA не ругалась на "comparison to itself"
+    // проверки -IDEA - comparison to itself
     private static boolean isNaN(double v) { return v != v; }
     private static boolean isInf(double v) {
         return v == 1.0/0.0 || v == -1.0/0.0;

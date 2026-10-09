@@ -67,14 +67,14 @@ public final class Num {
         }
 
         if (i != len) throw new NumberFormatException("trailing");
-        if (isNaN(result) || isInf(result))
+        if (result != result || result == 1.0/0.0 || result == -1.0/0.0)
             throw new NumberFormatException("overflow");
 
         return neg ? -result : result;
     }
 
     public static String format(double v) {
-        if (isNaN(v)) return "NaN";
+        if (v != v) return "NaN";
         if (v == 1.0/0.0) return "Infinity";
         if (v == -1.0/0.0) return "-Infinity";
 
@@ -112,25 +112,6 @@ public final class Num {
         return sb.toString();
     }
 
-    public static String[] split(String s) {
-        int count = 0;
-        boolean inTok = false;
-        for (int i = 0; i < s.length(); i++) {
-            if (isSep(s.charAt(i))) inTok = false;
-            else { if (!inTok) count++; inTok = true; }
-        }
-        String[] out = new String[count];
-        int idx = 0;
-        StringBuilder cur = new StringBuilder();
-        for (int i = 0; i <= s.length(); i++) {
-            char c = (i < s.length()) ? s.charAt(i) : ' ';
-            if (isSep(c)) {
-                if (cur.length() > 0) { out[idx++] = cur.toString(); cur.setLength(0); }
-            } else cur.append(c);
-        }
-        return out;
-    }
-
     public static String trim(String s) {
         int a = 0, b = s.length();
         while (a < b && s.charAt(a) <= ' ') a++;
@@ -141,14 +122,5 @@ public final class Num {
         return new String(buf);
     }
 
-    // свои проверки — чтобы IDEA не ругалась на "comparison to itself"
-    private static boolean isNaN(double v) { return v != v; }
-    private static boolean isInf(double v) {
-        return v == 1.0/0.0 || v == -1.0/0.0;
-    }
-
     private static boolean isDigit(char c) { return c >= '0' && c <= '9'; }
-    private static boolean isSep(char c) {
-        return c == ' ' || c == ',' || c == ';' || c == '\t';
-    }
 }

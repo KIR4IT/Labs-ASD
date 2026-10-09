@@ -1,14 +1,13 @@
 package src.lab2.matrix;
 
-/** Операции над CCS-матрицей. */
+/** Операции над CCS матрицей */
 public final class MatrixOps {
 
     private MatrixOps() {}
 
     /**
-     * Циклический сдвиг каждого столбца вниз на n разрядов.
-     * rowIndex[i] = (rowIndex[i] + n) mod rows
-     * Затем внутри каждого столбца сортируем по rowIndex (требование CCS).
+     * Циклический сдвиг каждого столбца вниз на n разрядов
+     * rowIndex[i] = (rowIndex[i] + n) mod rows затем внутри каждого столбца сортируем по rowIndex
      */
     public static void cyclicShiftColumns(CCSMatrix m, int n) {
         int rows = m.rows;
@@ -26,7 +25,7 @@ public final class MatrixOps {
         }
     }
 
-    /** Сортировка вставками участка [from; to) по rowIndex. */
+    /** Сортировка участка с до по индексу строки */
     private static void sortByRow(double[] vals, int[] rows, int from, int to) {
         for (int i = from + 1; i < to; i++) {
             double v = vals[i];

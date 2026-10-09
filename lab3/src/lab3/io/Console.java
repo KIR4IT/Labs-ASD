@@ -1,6 +1,5 @@
 package src.lab3.io;
 
-/** Свой ввод без java.io. Читаем байты System.in.read() и собираем UTF-8 вручную. */
 public final class Console {
 
     private Console() {}
@@ -20,7 +19,6 @@ public final class Console {
             throw new RuntimeException("read error");
         }
 
-        // Ручная сборка UTF-8 -> char[]
         char[] chars = new char[n];
         int ci = 0, bi = 0;
         while (bi < n) {
