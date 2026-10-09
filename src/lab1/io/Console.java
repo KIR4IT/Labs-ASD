@@ -1,6 +1,5 @@
-package io;
+package lab1.io;
 
-/** Свой ввод без java.io. Читаем байты System.in.read() и собираем UTF-8 вручную. */
 public final class Console {
 
     private Console() {}
@@ -20,7 +19,7 @@ public final class Console {
             throw new RuntimeException("read error");
         }
 
-        // Ручная сборка UTF-8 → char[]
+        // сборка UTF-8 → char[]
         char[] chars = new char[n];
         int ci = 0, bi = 0;
         while (bi < n) {
@@ -39,7 +38,6 @@ public final class Console {
                 int c3 = buf[bi++] & 0x3F;
                 int c4 = buf[bi++] & 0x3F;
                 int cp = ((c & 0x07) << 18) | (c2 << 12) | (c3 << 6) | c4;
-                // surrogate pair для codepoint > 0xFFFF
                 cp -= 0x10000;
                 chars[ci++] = (char) (0xD800 + (cp >> 10));
                 chars[ci++] = (char) (0xDC00 + (cp & 0x3FF));

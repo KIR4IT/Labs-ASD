@@ -1,11 +1,10 @@
 package util;
 
-/** Свои парсер, форматтер double и split. Без сторонних библиотек. */
 public final class Num {
 
     private Num() {}
 
-    // ================= ПАРСЕР =================
+    // парсер
     public static boolean isDouble(String s) {
         try { parse(s); return true; }
         catch (NumberFormatException e) { return false; }
@@ -75,7 +74,7 @@ public final class Num {
         return neg ? -result : result;
     }
 
-    // ================= ФОРМАТТЕР =================
+
     public static String format(double v) {
         if (v != v) return "NaN";
         if (v == 1.0/0.0) return "Infinity";
@@ -89,7 +88,7 @@ public final class Num {
 
         if (fracPart < 1e-12) return (neg ? "-" : "") + intPart;
 
-        // округляем до 6 знаков
+        // округляем
         int digits = 6;
         double scale = 1;
         for (int k = 0; k < digits; k++) scale *= 10;
@@ -116,7 +115,6 @@ public final class Num {
         return sb.toString();
     }
 
-    // ================= SPLIT =================
     public static String[] split(String s) {
         int count = 0;
         boolean inTok = false;
@@ -136,7 +134,6 @@ public final class Num {
         return out;
     }
 
-    // ================= TRIM =================
     public static String trim(String s) {
         int a = 0, b = s.length();
         while (a < b && s.charAt(a) <= ' ') a++;

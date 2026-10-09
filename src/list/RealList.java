@@ -2,10 +2,8 @@ package list;
 
 import util.Num;
 
-/** Односвязный список действительных чисел. */
 public class RealList {
 
-    /** Узел списка. */
     private static class Node {
         double data;
         Node next;
@@ -25,7 +23,6 @@ public class RealList {
         size++;
     }
 
-    /** Продублировать все положительные числа. */
     public void duplicatePositive() {
         Node cur = head;
         while (cur != null) {

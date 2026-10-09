@@ -1,4 +1,4 @@
-import io.Console;
+import lab1.io.Console;
 import list.RealList;
 import util.Num;
 
