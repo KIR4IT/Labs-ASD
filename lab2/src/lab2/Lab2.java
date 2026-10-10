@@ -18,7 +18,7 @@ public class Lab2 {
 
         while (a == null) {
             double[][] temp = new double[64][];
-            int r = 0;
+            int r =0;
             int expectedCols = -1;
             boolean bad = false;
 
@@ -48,7 +48,7 @@ public class Lab2 {
                 }
                 temp[r++] = trimmed;
                 if (r >= temp.length) {
-                    System.out.println("  [!] Слишком много строк (max 64).");
+                    System.out.println("  [!] Слишком много строк ( 64 макс).");
                     break;
                 }
             }

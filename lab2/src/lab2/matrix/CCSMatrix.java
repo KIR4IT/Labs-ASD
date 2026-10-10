@@ -7,9 +7,9 @@ public class CCSMatrix {
 
     public int rows;
     public int cols;
-    public double[] values;   // значения ненулевых элементов
-    public int[] rowIndex;    // индексы строк для values
-    public int[] colPtr;      // colPtr[j] — начало столбца j
+    public double[] values;   // значения ненулевых элементов 1 массив (ненулевые элементы)
+    public int[] rowIndex;    // индексы строк для values 2 массив (для каждого элемента хранит номер строки)
+    public int[] colPtr;      // colPtr[j] — начало столбца j 3 массив (длина, индекс с которого начинаются элементы столбца)
 
     public CCSMatrix(int rows, int cols) {
         this.rows = rows;
@@ -19,7 +19,7 @@ public class CCSMatrix {
         this.colPtr = new int[cols + 1];
     }
 
-    /** CCS */
+    /** CCS, nnz - это не нулевой */
     public static CCSMatrix fromDense(double[][] a, int rows, int cols) {
         int nnz = 0;
         for (int i = 0; i < rows; i++)
@@ -42,7 +42,7 @@ public class CCSMatrix {
                 }
             }
         }
-        m.colPtr[cols] = k;
+        m.colPtr[cols] =k;
         return m;
     }
 

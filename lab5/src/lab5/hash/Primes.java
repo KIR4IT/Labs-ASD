@@ -5,7 +5,7 @@ public final class Primes {
 
     private Primes() {}
 
-    /** Следующее простое число >= n. */
+    /** Следующее число >= n. */
     public static int nextPrime(int n) {
         if (n < 2) return 2;
         int candidate = (n % 2 == 0) ? n + 1 : n;

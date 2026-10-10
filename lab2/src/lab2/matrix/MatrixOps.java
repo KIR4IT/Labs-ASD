@@ -7,7 +7,7 @@ public final class MatrixOps {
 
     /**
      * Циклический сдвиг каждого столбца вниз на n разрядов
-     * rowIndex[i] = (rowIndex[i] + n) mod rows затем внутри каждого столбца сортируем по rowIndex
+     * rowIndex[i] = (rowIndex[i] + n) mod rows затем внутри каждого столбца сортирую по rowIndex
      */
     public static void cyclicShiftColumns(CCSMatrix m, int n) {
         int rows = m.rows;

@@ -1,6 +1,6 @@
 package src.lab5.hash;
 
-/** Запись хеш-таблицы ключ (ФИО) */
+/** Запись хеш-таблицы ключ ФИО */
 public class Entry {
 
     public String key;       // ФИО
