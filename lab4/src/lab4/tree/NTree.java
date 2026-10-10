@@ -2,7 +2,6 @@ package src.lab4.tree;
 
 import src.lab4.util.Num;
 
-/** рекурсивный поиск максимума среди ВНУТРЕННИХ вершин */
 public class NTree {
 
     public TreeNode root;
@@ -11,17 +10,12 @@ public class NTree {
         root = null;
     }
 
-    // максимум среди ВНУТРЕННИХ вершин
+    // ЗАДАНИЕ
 
-    /**
-     * Возвращает максимальное значение среди внутренних узлов.
-     * Внутренний узел — у которого есть хотя бы один потомок.
-     * Если внутренних узлов нет — возвращает Нан (или можно вернуть 0).
-     */
     public double maxInternal() {
         boolean[] found = { false };
         double result = maxInternal(root, found);
-        return found[0] ? result : 0;   // если внутренних нет — вернём 0
+        return found[0] ? result : 0;
     }
 
     private double maxInternal(TreeNode node, boolean[] found) {
@@ -29,13 +23,11 @@ public class NTree {
 
         double best = found[0] ? -1.0/0.0 : 0;
 
-        // если это внутренний узел — он участвует в сравнении
         if (!node.isLeaf()) {
             if (!found[0] || node.data > best) best = node.data;
             found[0] = true;
         }
 
-        // обходим всех детей
         for (int i = 0; i < node.childCount; i++) {
             double childBest = maxInternal(node.children[i], found);
             if (found[0] && childBest > best) best = childBest;
@@ -44,21 +36,27 @@ public class NTree {
         return best;
     }
 
-    // Вывод
-
+    //ВЫВОД
     public void printTree() {
         if (root == null) {
             System.out.println("(пусто)");
             return;
         }
-        printTree(root, 0);
+        System.out.println(Num.format(root.data));
+        printChildren(root, "");
     }
 
-    private void printTree(TreeNode node, int level) {
-        for (int i = 0; i < level; i++) System.out.print("    ");
-        System.out.println(Num.format(node.data));
+    private void printChildren(TreeNode node, String prefix) {
         for (int i = 0; i < node.childCount; i++) {
-            printTree(node.children[i], level + 1);
+            boolean isLast = (i == node.childCount - 1);
+            TreeNode child = node.children[i];
+
+            System.out.print(prefix);
+            System.out.print(isLast ? "└── " : "├── ");
+            System.out.println(Num.format(child.data));
+
+            String nextPrefix = prefix + (isLast ? "    " : "│   ");
+            printChildren(child, nextPrefix);
         }
     }
 }
