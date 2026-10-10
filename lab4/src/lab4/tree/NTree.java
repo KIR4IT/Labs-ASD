@@ -1,6 +1,6 @@
-package lab4.tree;
+package src.lab4.tree;
 
-import lab4.util.Num;
+import src.lab4.util.Num;
 
 /** рекурсивный поиск максимума среди ВНУТРЕННИХ вершин */
 public class NTree {
@@ -27,7 +27,7 @@ public class NTree {
     private double maxInternal(TreeNode node, boolean[] found) {
         if (node == null) return 0;
 
-        double best = found[0] ? Double.NEGATIVE_INFINITY : 0;
+        double best = found[0] ? -1.0/0.0 : 0;
 
         // если это внутренний узел — он участвует в сравнении
         if (!node.isLeaf()) {

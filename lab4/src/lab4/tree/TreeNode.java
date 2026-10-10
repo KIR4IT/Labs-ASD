@@ -1,4 +1,4 @@
-package lab4.tree;
+package src.lab4.tree;
 
 /** Узел N-дерева: значение и массив потомков. */
 public class TreeNode {

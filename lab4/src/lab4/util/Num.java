@@ -1,4 +1,4 @@
-package lab3.util;
+package src.lab4.util;
 
 public final class Num {
 
