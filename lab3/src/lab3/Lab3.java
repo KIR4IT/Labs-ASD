@@ -18,7 +18,6 @@ public class Lab3 {
         tree.root = readNode("Корень");
 
         System.out.println();
-        System.out.println("Дерево (повёрнуто на 90°, корень слева):");
         tree.printTree();
 
         double sum = tree.sumLeaves();

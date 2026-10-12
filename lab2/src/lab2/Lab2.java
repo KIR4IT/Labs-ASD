@@ -74,7 +74,7 @@ public class Lab2 {
         int n = 0;
         while (true) {
             System.out.print("Введите n (сдвиг вниз, любое целое): ");
-            String s = Num.trim(Console.readLine());
+            String s =Num.trim(Console.readLine());
             try {
                 n = parseInt(s);
                 break;

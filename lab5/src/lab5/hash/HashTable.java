@@ -1,13 +1,14 @@
 package src.lab5.hash;
 
+import src.lab5.Menu;
+
 /**
- * Ключ: ФИО строка, Хеш-функция: функции работы со строковыми ключами.
- * Коллизии: квадратичное опробование
- * Рехеширование при loadFactor > 0.7.
+ * Хеш-таблица, открытая адресация.
+ * Ключ: ФИО. Хеш: StringHash. Коллизии: Collision.
  */
 public class HashTable {
 
-    private static final double LOAD_FACTOR_LIMIT = 0.7;
+    private static final double LIMIT = 0.7;
 
     private Entry[] table;
     private int size;
@@ -16,103 +17,81 @@ public class HashTable {
     public HashTable(int initialCapacity) {
         size = Primes.nextPrime(initialCapacity);
         table = new Entry[size];
-        count = 0;
     }
 
-    //  вставляю ключ
-    public boolean insert(String key) {
-        if (key == null || key.length() == 0) return false;
+    // ---------- API ----------
 
-        // если ключ уже есть — ничего не делаю
-        if (findIndex(key) != -1) {
-            return false;
-        }
+    public void insert(String key) {
+        if (key == null || key.length() == 0) return;
+        if (contains(key)) return;
+        if ((double) count / size >= LIMIT) rehash();
 
-        if ((double) (count + 1) / size > LOAD_FACTOR_LIMIT) {
-            rehash();
-        }
-
-        int h = StringHash.hash(key, size);
-        int firstDeleted = -1;
-        for (int i = 0; i < size; i++) {
-            int idx = Collision.probe(h, i, size);
-            Entry e = table[idx];
-            if (e == null) {
-                int target = (firstDeleted != -1) ? firstDeleted : idx;
-                table[target] = new Entry(key);
-                count++;
-                return true;
-            }
-            if (e.isDeleted()) {
-                if (firstDeleted == -1) firstDeleted = idx;
-            } else if (e.key.equals(key)) {
-                return false;   // уже есть
-            }
-        }
-        if (firstDeleted != -1) {
-            table[firstDeleted] = new Entry(key);
-            count++;
-            return true;
-        }
-        rehash();
-        return insert(key);
+        int idx = findSlot(key, true);
+        table[idx] = new Entry(key);
+        count++;
     }
 
-    // поиск (есть / нет)
     public boolean contains(String key) {
-        return findIndex(key) != -1;
+        return findSlot(key, false) != -1;
     }
 
-    private int findIndex(String key) {
+    public boolean remove(String key) {
+        int idx = findSlot(key, false);
+        if (idx == -1) return false;
+
+        table[idx] = null;
+        count--;
+        reinsertAfter(idx);
+        return true;
+    }
+
+    public void print() {
+        System.out.println(Menu.tableHeader(size, count));
+        for (int i = 0; i < size; i++) {
+            if (table[i] == null) System.out.println(Menu.slotEmpty(i));
+            else System.out.println(Menu.slotValue(i, table[i].key));
+        }
+    }
+
+    // ---------- внутреннее ----------
+
+    /**
+     * Ищет слот для ключа.
+     * free = true  — вернуть первый пустой слот (для вставки).
+     * free = false — вернуть слот с ключом или -1 (для поиска/удаления).
+     */
+    private int findSlot(String key, boolean free) {
         int h = StringHash.hash(key, size);
         for (int i = 0; i < size; i++) {
             int idx = Collision.probe(h, i, size);
-            Entry e = table[idx];
-            if (e == null) return -1;
-            if (e.isDeleted()) continue;
-            if (e.key.equals(key)) return idx;
+            if (table[idx] == null) return free ? idx : -1;
+            if (table[idx].key.equals(key)) return idx;
         }
         return -1;
     }
 
-    //  удаление
-    public boolean remove(String key) {
-        int idx = findIndex(key);
-        if (idx == -1) return false;
-        table[idx].deleted = true;
-        count--;
-        return true;
-    }
-
-    //  рехеширование если перегрузка
     private void rehash() {
-        int newSize = Primes.nextPrime(size * 2);
         Entry[] old = table;
         int oldSize = size;
-        table = new Entry[newSize];
-        size = newSize;
+
+        size = Primes.nextPrime(oldSize * 2);
+        table = new Entry[size];
         count = 0;
 
         for (int i = 0; i < oldSize; i++) {
-            Entry e = old[i];
-            if (e != null && e.isAlive()) {
-                insert(e.key);
-            }
+            if (old[i] != null) insert(old[i].key);
         }
     }
 
-    // вывод
-    public void print() {
-        System.out.println("Хеш-таблица (размер=" + size + ", записей=" + count + "):");
-        for (int i = 0; i < size; i++) {
-            Entry e = table[i];
-            if (e == null) {
-                System.out.println("  [" + i + "] —");
-            } else if (e.isDeleted()) {
-                System.out.println("  [" + i + "] <удалено>");
-            } else {
-                System.out.println("  [" + i + "] " + e.key);
-            }
+    /** Перестраивает кластер после удаления. */
+    private void reinsertAfter(int start) {
+        int i = (start + 1) % size;
+        while (table[i] != null) {
+            String k = table[i].key;
+            table[i] = null;
+            count--;
+            insert(k);
+            i = (i + 1) % size;
         }
     }
 }

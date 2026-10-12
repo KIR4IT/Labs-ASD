@@ -19,7 +19,7 @@ public final class Console {
             throw new RuntimeException("read error");
         }
 
-        char[] chars = new char[n];
+        char[] chars= new char[n];
         int ci = 0, bi = 0;
         while (bi < n) {
             int c = buf[bi++] & 0xFF;

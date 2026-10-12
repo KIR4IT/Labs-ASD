@@ -16,7 +16,7 @@ public class BinaryTree {
     }
 
     private double sumLeaves(TreeNode node) {
-        if (node == null) return 0;
+        if (node== null) return 0;
 
         // лист — нет ни левого, ни правого потомка
         if (node.left == null && node.right == null) {
@@ -86,7 +86,7 @@ public class BinaryTree {
     private void fill(TreeNode n, int row, int col, int offset, char[][] c) {
         if (n == null) return;
 
-        String s = Num.format(n.data);
+        String s =Num.format(n.data);
         for (int k = 0; k < s.length(); k++)
             c[row][col + k] = s.charAt(k);
 
