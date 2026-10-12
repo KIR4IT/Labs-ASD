@@ -1,9 +1,6 @@
 package src.lab5.hash;
 
-/**
- * Метод разрешения коллизий: квадратичное опробование
- * index = (h + i*i) mod size,  i = 0, 1, 2, ...
- */
+/** Квадратичное опробование: (h + i*i) mod size. */
 public final class Collision {
 
     private Collision() {}

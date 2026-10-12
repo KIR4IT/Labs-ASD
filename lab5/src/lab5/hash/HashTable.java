@@ -26,8 +26,7 @@ public class HashTable {
         if (contains(key)) return;
         if ((double) count / size >= LIMIT) rehash();
 
-        int idx = findSlot(key, true);
-        table[idx] = new Entry(key);
+        table[findSlot(key, true)] = new Entry(key);
         count++;
     }
 
@@ -55,11 +54,7 @@ public class HashTable {
 
     // ---------- внутреннее ----------
 
-    /**
-     * Ищет слот для ключа.
-     * free = true  — вернуть первый пустой слот (для вставки).
-     * free = false — вернуть слот с ключом или -1 (для поиска/удаления).
-     */
+    /** free=true — первый пустой слот, free=false — слот с ключом или -1. */
     private int findSlot(String key, boolean free) {
         int h = StringHash.hash(key, size);
         for (int i = 0; i < size; i++) {
@@ -78,12 +73,10 @@ public class HashTable {
         table = new Entry[size];
         count = 0;
 
-        for (int i = 0; i < oldSize; i++) {
+        for (int i = 0; i < oldSize; i++)
             if (old[i] != null) insert(old[i].key);
-        }
     }
 
-    /** Перестраивает кластер после удаления. */
     private void reinsertAfter(int start) {
         int i = (start + 1) % size;
         while (table[i] != null) {
