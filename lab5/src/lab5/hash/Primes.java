@@ -5,6 +5,7 @@ public final class Primes {
 
     private Primes() {}
 
+    /** Следующее простое число >= n. */
     public static int nextPrime(int n) {
         if (n < 2) return 2;
         if (n % 2 == 0) n++;
@@ -12,7 +13,7 @@ public final class Primes {
         return n;
     }
 
-    public static boolean isPrime(int n) {
+    private static boolean isPrime(int n) {
         if (n < 2) return false;
         if (n % 2 == 0) return n == 2;
         for (int d = 3; d * d <= n; d += 2)

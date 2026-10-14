@@ -24,7 +24,7 @@ public class HashTable {
     public void insert(String key) {
         if (key == null || key.length() == 0) return;
         if (contains(key)) return;
-        if ((double) count / size >= LIMIT) rehash();
+        if ((double) count / size >= LIMIT) resize();
 
         table[findSlot(key, true)] = new Entry(key);
         count++;
@@ -40,7 +40,7 @@ public class HashTable {
 
         table[idx] = null;
         count--;
-        reinsertAfter(idx);
+        rebuild();          // пересобираем всю таблицу — просто и без дыр
         return true;
     }
 
@@ -65,26 +65,21 @@ public class HashTable {
         return -1;
     }
 
-    private void rehash() {
-        Entry[] old = table;
-        int oldSize = size;
+    /** Увеличение таблицы при переполнении. */
+    private void resize() {
+        size = Primes.nextPrime(size * 2);
+        rebuild();
+    }
 
-        size = Primes.nextPrime(oldSize * 2);
+    /** Пересобирает таблицу из живых элементов. */
+    private void rebuild() {
+        Entry[] old = table;
+        int oldSize = old.length;
+
         table = new Entry[size];
         count = 0;
 
         for (int i = 0; i < oldSize; i++)
             if (old[i] != null) insert(old[i].key);
-    }
-
-    private void reinsertAfter(int start) {
-        int i = (start + 1) % size;
-        while (table[i] != null) {
-            String k = table[i].key;
-            table[i] = null;
-            count--;
-            insert(k);
-            i = (i + 1) % size;
-        }
     }
 }
