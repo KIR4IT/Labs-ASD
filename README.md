@@ -424,7 +424,7 @@ java -cp out src.lab8.Lab8
 <table>
   <tr>
     <td align="center" valign="middle">
-      <a href="https://github.com">
+      <a href="https://github.com/KIR4IT">
         <img src="https://avatars.githubusercontent.com/u/237877890?s=60&v=4" width="100px" style="border-radius: 50%;" alt="KIR4IT"/>
       </a>
     </td>
@@ -433,3 +433,9 @@ java -cp out src.lab8.Lab8
     </td>
   </tr>
 </table>
+
+<br/>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/KIR4IT/Labs-ASD/refs/heads/master/resorses/1.png" width="60%" alt="Nissan Laurel"/>
+</p>
