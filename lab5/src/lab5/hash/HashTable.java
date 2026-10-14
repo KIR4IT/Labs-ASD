@@ -1,6 +1,6 @@
 package src.lab5.hash;
 
-import src.lab5.Menu;
+import src.lab5.resources.Menu;
 
 /**
  * Хеш-таблица, открытая адресация.
@@ -23,7 +23,7 @@ public class HashTable {
 
     public void insert(String key) {
         if (key == null || key.length() == 0) return;
-        if (contains(key)) return;
+        if (findSlot(key, false) != -1) return;              // уже есть
         if ((double) count / size >= LIMIT) resize();
 
         table[findSlot(key, true)] = new Entry(key);
@@ -40,7 +40,7 @@ public class HashTable {
 
         table[idx] = null;
         count--;
-        rebuild();          // пересобираем всю таблицу — просто и без дыр
+        rebuild();
         return true;
     }
 
@@ -54,7 +54,10 @@ public class HashTable {
 
     // ---------- внутреннее ----------
 
-    /** free=true — первый пустой слот, free=false — слот с ключом или -1. */
+    /**
+     * free = true  — вернуть первый пустой слот (для вставки).
+     * free = false — вернуть слот с ключом или -1.
+     */
     private int findSlot(String key, boolean free) {
         int h = StringHash.hash(key, size);
         for (int i = 0; i < size; i++) {
@@ -65,13 +68,12 @@ public class HashTable {
         return -1;
     }
 
-    /** Увеличение таблицы при переполнении. */
     private void resize() {
         size = Primes.nextPrime(size * 2);
         rebuild();
     }
 
-    /** Пересобирает таблицу из живых элементов. */
+    /** Пересборка без вызова insert — иначе на середине перевставки снова сработает resize. */
     private void rebuild() {
         Entry[] old = table;
         int oldSize = old.length;
@@ -79,7 +81,11 @@ public class HashTable {
         table = new Entry[size];
         count = 0;
 
-        for (int i = 0; i < oldSize; i++)
-            if (old[i] != null) insert(old[i].key);
+        for (int i = 0; i < oldSize; i++) {
+            if (old[i] != null) {
+                table[findSlot(old[i].key, true)] = old[i];
+                count++;
+            }
+        }
     }
 }

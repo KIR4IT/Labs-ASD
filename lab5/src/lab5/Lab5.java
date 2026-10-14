@@ -1,6 +1,7 @@
 package src.lab5;
 
 import src.lab5.io.Console;
+import src.lab5.resources.Menu;
 import src.lab5.hash.HashTable;
 import src.lab5.util.Num;
 
@@ -27,8 +28,8 @@ public class Lab5 {
 
     private static void insert(HashTable table) {
         String key = askKey();
-        if (key.length() == 0)     { System.out.println(Menu.EMPTY_KEY); return; }
-        if (table.contains(key))   { System.out.println(Menu.ALREADY + key); return; }
+        if (key.length() == 0)   { System.out.println(Menu.EMPTY_KEY); return; }
+        if (table.contains(key)) { System.out.println(Menu.ALREADY + key); return; }
         table.insert(key);
         System.out.println(Menu.INSERTED + key);
     }

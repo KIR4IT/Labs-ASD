@@ -8,4 +8,4 @@ public final class Collision {
     public static int probe(int h, int i, int size) {
         return (h + i * i) % size;
     }
-}
+}   

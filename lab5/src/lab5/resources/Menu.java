@@ -1,4 +1,4 @@
-package src.lab5;
+package src.lab5.resources;
 
 /** Все тексты программы. */
 public final class Menu {
