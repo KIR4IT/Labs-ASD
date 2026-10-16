@@ -99,15 +99,12 @@ public class Lab6 {
 
     // ---------- вывод ----------
 
+    /** Делегируем второму методу: превращаем DoubleArray в double[] и форматируем. */
     private static String toString(DoubleArray arr) {
-        StringBuilder sb = new StringBuilder("[");
-        for (int i = 0; i < arr.size(); i++) {
-            if (i > 0) sb.append(", ");
-            sb.append(Num.format(arr.get(i)));
-        }
-        return sb.append("]").toString();
+        return toString(arr.toArray());
     }
 
+    /** Основной метод форматирования массива в строку вида [1, 2, 3]. */
     private static String toString(double[] a) {
         StringBuilder sb = new StringBuilder("[");
         for (int i = 0; i < a.length; i++) {
