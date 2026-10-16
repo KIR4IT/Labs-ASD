@@ -1,6 +1,7 @@
 package src.lab6;
 
 import src.lab6.io.Console;
+import src.lab6.resources.Menu;
 import src.lab6.sort.DoubleArray;
 import src.lab6.sort.QuickSort;
 import src.lab6.util.Num;
@@ -8,29 +9,23 @@ import src.lab6.util.Num;
 public class Lab6 {
 
     public static void main(String[] args) {
-        System.out.println("=== Лаба 6: быстрая сортировка чисел в диапазоне [N; K] ===");
-        System.out.println("Введите числа через пробел или запятую.");
+        System.out.println(Menu.HEADER);
         System.out.println();
 
-        // 1. Ввод массива
         DoubleArray arr = readArray();
+        System.out.println(Menu.originalArray(toString(arr), arr.size()));
 
-        System.out.println();
-        System.out.println("Исходный массив:");
-        System.out.println("  " + toString(arr) + "  (" + arr.size() + " эл.)");
-
-        // 2. Ввод N и K
-        double n = readDouble("Введите N (нижняя граница): ");
-        double k = readDouble("Введите K (верхняя граница): ");
+        double n = readDouble(Menu.N);
+        double k = readDouble(Menu.K);
 
         if (n > k) {
             double t = n;
             n = k;
             k = t;
-            System.out.println("  [i] N > K, границы поменяны местами.");
+            System.out.println(Menu.SWAPPED);
         }
 
-        // 3. Собираем индексы и значения чисел в диапазоне
+        // 1. собираем индексы и значения чисел в диапазоне
         int[] positions = new int[arr.size()];
         int m = 0;
         for (int i = 0; i < arr.size(); i++) {
@@ -39,38 +34,35 @@ public class Lab6 {
         }
 
         if (m == 0) {
-            System.out.println();
-            System.out.println("В диапазоне [" + Num.format(n) + "; " + Num.format(k) + "] чисел нет.");
+            System.out.println(Menu.noNumbersInRange(Num.format(n), Num.format(k)));
             return;
         }
 
         double[] inRange = new double[m];
         for (int i = 0; i < m; i++) inRange[i] = arr.get(positions[i]);
 
-        System.out.println();
-        System.out.println("Числа в диапазоне [" + Num.format(n) + "; " + Num.format(k) + "]:");
-        System.out.println("  " + toString(inRange) + "  (" + m + " эл.)");
+        System.out.println(Menu.inRangeHeader(Num.format(n), Num.format(k)));
+        System.out.println(Menu.inRangeList(toString(inRange), m));
 
-        // 4. Сортируем их
+        // 2. сортируем
         QuickSort.sort(inRange);
 
-        // 5. Раскладываем отсортированные значения обратно по исходным позициям
+        // 3. раскладываем обратно
         for (int i = 0; i < m; i++) arr.set(positions[i], inRange[i]);
 
-        System.out.println();
-        System.out.println("Массив после сортировки чисел в диапазоне:");
-        System.out.println("  " + toString(arr) + "  (" + arr.size() + " эл.)");
+        System.out.println(Menu.resultHeader());
+        System.out.println(Menu.inRangeList(toString(arr), arr.size()));
     }
 
     // ---------- ввод ----------
 
     private static DoubleArray readArray() {
         while (true) {
-            System.out.print("Введите числа: ");
+            System.out.print(Menu.ARRAY);
             String line = Num.trim(Console.readLine());
 
             if (line.length() == 0) {
-                System.out.println("  [!] Пусто — попробуйте снова.");
+                System.out.println(Menu.EMPTY_INPUT);
                 continue;
             }
 
@@ -84,10 +76,10 @@ public class Lab6 {
             }
 
             if (result.isEmpty()) {
-                System.out.println("  [!] Нет ни одного корректного числа — попробуйте снова.");
+                System.out.println(Menu.NO_NUMBERS);
                 continue;
             }
-            if (bad > 0) System.out.println("  [i] Пропущено некорректных: " + bad);
+            if (bad > 0) System.out.println(Menu.skipped(bad));
             return result;
         }
     }
@@ -97,11 +89,11 @@ public class Lab6 {
             System.out.print(prompt);
             String line = Num.trim(Console.readLine());
             if (line.length() == 0) {
-                System.out.println("  [!] Пусто — попробуйте снова.");
+                System.out.println(Menu.EMPTY_INPUT);
                 continue;
             }
             if (Num.isDouble(line)) return Num.parse(line);
-            System.out.println("  [!] Не число — попробуйте снова.");
+            System.out.println(Menu.NOT_NUMBER);
         }
     }
 
