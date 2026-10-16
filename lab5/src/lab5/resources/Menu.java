@@ -18,6 +18,8 @@ public final class Menu {
                     "  2 — найти ФИО\n" +
                     "  3 — удалить ФИО\n" +
                     "  4 — напечатать таблицу\n" +
+                    "  5 — рехешировать вручную\n" +
+                    "  6 — загрузить тестовые данные\n" +
                     "  0 — выход";
 
     public static final String PROMPT_CHOICE = "Выбор: ";
@@ -31,6 +33,15 @@ public final class Menu {
     public static final String REMOVED    = "  [+] Удалено: ";
     public static final String BAD_CHOICE = "  [!] Неверный пункт.";
     public static final String BYE        = "Выход.";
+
+    // для тестовых данных
+    public static final String TEST_LOADED     = "  [+] Загружено тестовых записей: ";
+    public static final String TEST_ALREADY    = "  [i] Уже есть, пропущено: ";
+
+    // для ручного рехеширования
+    public static String rehashed(int oldSize, int newSize) {
+        return "  [+] Рехеширование: " + oldSize + " → " + newSize;
+    }
 
     public static String tableHeader(int size, int count) {
         return "Хеш-таблица (размер=" + size + ", записей=" + count + ")";

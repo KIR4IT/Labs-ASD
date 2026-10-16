@@ -52,6 +52,14 @@ public class HashTable {
         }
     }
 
+    /** Принудительное рехеширование (вручную из меню). */
+    public void forceRehash() {
+        int oldSize = size;
+        size = Primes.nextPrime(size * 2);
+        rebuild();
+        System.out.println(Menu.rehashed(oldSize, size));
+    }
+
     // ---------- внутреннее ----------
 
     /**
