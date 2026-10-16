@@ -437,5 +437,5 @@ java -cp out src.lab8.Lab8
 <br/>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/KIR4IT/Labs-ASD/refs/heads/master/resourses/1.png" width="60%" alt="Nissan Laurel"/>
+  <img src="https://raw.githubusercontent.com/KIR4IT/Labs-ASD/refs/heads/master/resorses/1.png" width="60%" alt="Nissan Laurel"/>
 </p>
